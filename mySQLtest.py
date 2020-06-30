@@ -12,6 +12,10 @@ except mysql.connector.Error as err:
         print("Database does not exist")
     else:
         print(err)
-else:
-    print("OK")
-    cnx.close()
+
+mycursor = cnx.cursor()
+
+mycursor.execute("SHOW DATABASES")
+
+for x in mycursor:
+  print(x)
