@@ -15,7 +15,7 @@ except mysql.connector.Error as err:
 
 mycursor = cnx.cursor()
 
-db_list = ['bigdata','laimktagent','lairning','mysql','sarsa']
+db_list = ['bigdata','laimktagent','lairning','sarsa']
 
 for db in db_list:
     mycursor.execute("USE {}".format(db))
