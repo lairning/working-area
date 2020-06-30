@@ -19,5 +19,6 @@ db_list = ['bigdata','laimktagent','lairning','mysql','sarsa']
 
 for db in db_list:
     mycursor.execute("USE {}".format(db))
+    mycursor.execute("SHOW TABLES")
     tables = mycursor.fetchall()
     print(db,tables)
