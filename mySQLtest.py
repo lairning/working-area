@@ -15,7 +15,9 @@ except mysql.connector.Error as err:
 
 mycursor = cnx.cursor()
 
-mycursor.execute("SHOW DATABASES")
+db_list = ['bigdata','laimktagent','lairning','mysql','sarsa']
 
-for x in mycursor:
-  print(x)
+for db in db_list:
+    mycursor.execute("USE {}".format(db))
+    tables = mycursor.fetchall()
+    print(db,tables)
