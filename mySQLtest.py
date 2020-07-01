@@ -14,7 +14,8 @@ def db_connect(db_name: str):
                                  host='173.249.37.119',
                                  database=db_name)
 
-dbcursor = db_connect('laimktagent').cursor()
+dbcon = db_connect('laimktagent')
+dbcursor = dbcon.cursor()
 
 if DBTYPE == 'sqlite':
     dbcursor.execute('''SELECT  
