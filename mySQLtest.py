@@ -26,7 +26,7 @@ if DBTYPE == 'sqlite':
                             type ='table' AND 
                             name NOT LIKE "sqlite_%"''')
 if DBTYPE == 'mysql':
-    dbcursor.execute("select * from model")
+    dbcursor.execute("show databases")
 
 tables = dbcursor.fetchall()
 print(tables)
