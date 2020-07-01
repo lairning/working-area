@@ -1,24 +1,31 @@
-import mysql.connector
-from mysql.connector import errorcode
 
-try:
-    cnx = mysql.connector.connect(user='lairning',
-                                  password='Pocosi12!',
-                                  host='173.249.37.119')
-except mysql.connector.Error as err:
-    if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-        print("Something is wrong with your user name or password")
-    elif err.errno == errorcode.ER_BAD_DB_ERROR:
-        print("Database does not exist")
+def db_connect(db_name: str):
+    import platform
+    global DBTYPE
+    if platform.system() == 'Windows':
+        DBTYPE= 'sqlite'
+        import sqlite3 as dbengine
+        return dbengine.connect("{}.db".format(db_name))
     else:
-        print(err)
+        DBTYPE = 'mysql'
+        import mysql.connector as dbengine
+        return dbengine.connect(user='lairning',
+                                 password='Pocosi12!',
+                                 host='173.249.37.119',
+                                 database=db_name)
 
-mycursor = cnx.cursor()
+dbcursor = db_connect('laimktagent').cursor()
 
-db_list = ['bigdata','laimktagent','lairning','sarsa']
+if DBTYPE == 'sqlite':
+    dbcursor.execute('''SELECT  
+                            name
+                        FROM 
+                            sqlite_master 
+                        WHERE 
+                            type ='table' AND 
+                            name NOT LIKE "sqlite_%"''')
+if DBTYPE == 'mysql':
+    dbcursor.execute("SHOW TABLES")
 
-for db in db_list:
-    mycursor.execute("USE {}".format(db))
-    mycursor.execute("SHOW TABLES")
-    tables = mycursor.fetchall()
-    print(db,tables)
+tables = dbcursor.fetchall()
+print(tables)
